@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "760844077175",
+    "project_id": "trendz-22068",
+    "storage_bucket": "trendz-22068.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760844077175:android:45d703e6ba21a06ce19e72",
+        "android_client_info": {
+          "package_name": "com.example.trendz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760844077175-fvmsd2ad94bgv96roscnnt2eig4jduq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trendz",
+            "certificate_hash": "03fe908e51c385ded478f64de1675ee082fb8ee5"
+          }
+        },
+        {
+          "client_id": "760844077175-mpq10bs1pcjbqr19442joapa6mtt2khc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBoYEOBsMGBdCX3p6_bzDvVvcX2NOccWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760844077175-mpq10bs1pcjbqr19442joapa6mtt2khc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
