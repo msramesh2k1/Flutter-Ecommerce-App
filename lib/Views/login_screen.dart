@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           enabledBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.transparent)),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.transparent))),
                     ),
