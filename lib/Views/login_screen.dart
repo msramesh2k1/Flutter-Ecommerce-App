@@ -1,10 +1,8 @@
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,19 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController resetemailtexteditingcontroller =
       TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
-  void signInWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login();
 
-    if (result.status == LoginStatus.success) {
-      final AccessToken accessToken = result.accessToken!;
-      
-      print("Logged IN");
-    } else {
-      print(result.status);
-      print(result.message);
-    }
-   
-  }
 
   @override
   void initState() {
@@ -150,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          signInWithFacebook();
+                         
                         },
                         child: const Image(
                           image: NetworkImage(
