@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class GoogleSignin extends ChangeNotifier {
+class GoogleSigninController extends ChangeNotifier {
   GoogleSignInAccount? _user;
   bool? isloggedin;
-  GoogleSignin _googleSignin = GoogleSignin();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   login() {
-    _googleSignin.login();
+    _googleSignIn.signIn();
     notifyListeners();
   }
 }
