@@ -7,7 +7,10 @@ class GoogleSigninController extends ChangeNotifier {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   login() {
-    _googleSignIn.signIn();
+    _googleSignIn.signIn().then((userData) {
+      print(userData);
+    });
+
     notifyListeners();
   }
 }

@@ -15,6 +15,7 @@ class FacebookLoginController extends ChangeNotifier {
 
       final AccessToken accessToken = result.accessToken!;
       notifyListeners();
+      print(requestdata);
 
       print("Logged IN");
     } else {
@@ -23,7 +24,7 @@ class FacebookLoginController extends ChangeNotifier {
     }
   }
 
-logout() async {
+  logout() async {
     await FacebookAuth.i.logOut();
     userdata = null;
     notifyListeners();

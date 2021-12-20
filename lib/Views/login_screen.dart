@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trendz/Controllers/facebook_login_controller.dart';
+import 'package:trendz/Controllers/google_login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController resetemailtexteditingcontroller =
       TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
-
 
   @override
   void initState() {
@@ -126,17 +127,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Image(
-                        image: NetworkImage(
-                            "https://cdn-icons-png.flaticon.com/128/733/733547.png"),
-                        height: 30,
+                      GestureDetector(
+                        onTap: () {
+                          FacebookLoginController().login();
+                        },
+                        child: const Image(
+                          image: NetworkImage(
+                              "https://cdn-icons-png.flaticon.com/128/733/733547.png"),
+                          height: 30,
+                        ),
                       ),
                       const SizedBox(
                         width: 20,
                       ),
                       InkWell(
                         onTap: () {
-                         
+                          GoogleSigninController().login();
                         },
                         child: const Image(
                           image: NetworkImage(
