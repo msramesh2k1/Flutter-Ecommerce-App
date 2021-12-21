@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          GoogleSigninController().login();
+                          GoogleSigninController().signInWithGoogle();
                         },
                         child: const Image(
                           image: NetworkImage(
