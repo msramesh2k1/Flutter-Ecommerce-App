@@ -21,6 +21,7 @@ class GoogleSigninController extends ChangeNotifier {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
+    
     notifyListeners();
   }
 }
