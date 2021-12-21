@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trendz/Controllers/facebook_login_controller.dart';
-import 'package:trendz/Controllers/google_login_controller.dart';
+import 'package:trendz/Controllers/logincontroller.dart';
 
 import 'Views/splash_screen.dart';
 
@@ -20,8 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider.value(value: GoogleSigninController()),
-          ChangeNotifierProvider.value(value: FacebookLoginController())
+          ChangeNotifierProvider.value(value: LoginController()),
         ],
         child: MaterialApp(
             title: 'Trendz', theme: ThemeData(), home: const SplashScreen()));
