@@ -57,17 +57,33 @@ class LoginController {
 
       User? user = result.user;
       return setusermodel(user);
-
-  
     } on FirebaseAuthException catch (e) {
       print(e.message);
       return null;
     }
-   
   }
 
-  Future fblogout() async {
-    await FacebookAuth.i.logOut();
+  Future fblogin() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      final requestdata =
+          await FacebookAuth.i.getUserData(fields: "name,email,picture,id");
+
+      final AccessToken accessToken = result.accessToken!;
+
+      final OAuthCredential credential =
+          FacebookAuthProvider.credential(accessToken.token);
+      // Once signed in, return the UserCredential
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      User? user = userCredential.user;
+      return setusermodel(user);
+    } else {
+      print(result.status);
+      print(result.message);
+    }
   }
 
   Future signout() async {
@@ -77,5 +93,9 @@ class LoginController {
       print(e);
       return null;
     }
+  }
+
+  Future fblogout() async {
+    await FacebookAuth.i.logOut();
   }
 }

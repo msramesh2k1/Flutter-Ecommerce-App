@@ -126,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          LoginController().fblogin();
+                        },
                         child: const Image(
                           image: NetworkImage(
                               "https://cdn-icons-png.flaticon.com/128/733/733547.png"),
