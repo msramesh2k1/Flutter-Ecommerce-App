@@ -4,7 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trendz/models/user_model.dart';
 
-class LoginController {
+class LoginController extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserModel? setusermodel(User? user) {
@@ -40,6 +40,26 @@ class LoginController {
     }
   }
 
+  Future PhoneAuth() async {
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: '+44 7123 123 456',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          UserCredential result = await _auth.signInWithCredential(credential);
+          User? user = result.user;
+          setusermodel(user);
+          notifyListeners();
+        },
+        verificationFailed: (FirebaseAuthException e) {},
+        codeSent: (String verificationId, int? resendToken) {},
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return null;
+    }
+  }
+
   Future signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -56,7 +76,8 @@ class LoginController {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       User? user = result.user;
-      return setusermodel(user);
+      setusermodel(user);
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       print(e.message);
       return null;
@@ -79,7 +100,8 @@ class LoginController {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       User? user = userCredential.user;
-      return setusermodel(user);
+      setusermodel(user);
+      notifyListeners();
     } else {
       print(result.status);
       print(result.message);
@@ -88,7 +110,8 @@ class LoginController {
 
   Future signout() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
+      notifyListeners();
     } catch (e) {
       print(e);
       return null;
@@ -97,5 +120,6 @@ class LoginController {
 
   Future fblogout() async {
     await FacebookAuth.i.logOut();
+    notifyListeners();
   }
 }
