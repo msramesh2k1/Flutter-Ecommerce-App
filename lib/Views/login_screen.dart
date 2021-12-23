@@ -16,8 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   bool _password = true;
   bool phonelogin = false;
-  final TextEditingController phonecontroller =
-      TextEditingController(text: "+91 - ");
+  final TextEditingController phonecontroller = TextEditingController();
 
   @override
   void initState() {
@@ -75,7 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       onChanged: (String? value) {
                         setState(() {
-                          phonelogin = !phonelogin;
+                          phonecontroller.text.isEmpty
+                              ? phonelogin = false
+                              : phonelogin = true;
                         });
                       },
                       textAlign: TextAlign.center,
@@ -87,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: phonecontroller,
                       keyboardType: const TextInputType.numberWithOptions(),
                       decoration: InputDecoration(
+                          prefixText: "+91",
                           hintText: 'Enter Phone Number',
                           hintStyle: TextStyle(
                               letterSpacing: 1,
