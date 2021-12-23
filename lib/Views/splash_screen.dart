@@ -2,8 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:trendz/Controllers/logincontroller.dart';
 import 'package:trendz/Helpers/colors.dart';
+import 'package:trendz/Views/home_screen.dart';
 import 'package:trendz/Views/login_screen.dart';
+import 'package:trendz/Views/root.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,9 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) =>
-          
-            LoginScreen()));
+          context, MaterialPageRoute(builder: (context) => const Root()));
     });
 
     super.initState();

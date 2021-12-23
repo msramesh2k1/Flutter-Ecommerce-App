@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+import 'package:trendz/models/user_model.dart';
 
 import 'Views/splash_screen.dart';
 
@@ -17,11 +19,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: LoginController()),
-        ],
-        child: MaterialApp(
-            title: 'Trendz', theme: ThemeData(), home: const SplashScreen()));
+    return StreamProvider<UserModel?>.value(
+      value: LoginController().user,
+      initialData: null,
+      child: MaterialApp(
+          title: 'Trendz', theme: ThemeData(), home: const SplashScreen()),
+    );
   }
 }
