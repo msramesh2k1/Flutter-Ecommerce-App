@@ -15,10 +15,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   bool _password = true;
-  final TextEditingController emailcontroller = TextEditingController();
-  final TextEditingController resetemailtexteditingcontroller =
-      TextEditingController();
-  final TextEditingController passwordcontroller = TextEditingController();
+  bool phonelogin = false;
+  final TextEditingController phonecontroller =
+      TextEditingController(text: "+91 - ");
 
   @override
   void initState() {
@@ -28,10 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: false, body: smallscreen());
+    return Scaffold(resizeToAvoidBottomInset: false, body: login());
   }
 
-  Widget smallscreen() {
+  Widget login() {
     return Container(
       color: Colors.white,
       child: BackdropFilter(
@@ -74,11 +73,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: TextFormField(
+                      onChanged: (String? value) {
+                        setState(() {
+                          phonelogin = !phonelogin;
+                        });
+                      },
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2),
                       cursorColor: Colors.black,
-                      controller: emailcontroller,
-                      keyboardType: TextInputType.emailAddress,
+                      controller: phonecontroller,
+                      keyboardType: const TextInputType.numberWithOptions(),
                       decoration: InputDecoration(
                           hintText: 'Enter Phone Number',
                           hintStyle: TextStyle(
@@ -96,16 +103,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Text("Use Email",
-                  style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 16,
-                      letterSpacing: 0,
-                    ),
-                  )),
+              phonelogin
+                  ? GestureDetector(
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (_) => const OTPScreen()));
+                      },
+                      child: const CircleAvatar(
+                        radius: 30,
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.black,
+                      ),
+                    )
+                  : Text("Use Email",
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16,
+                          letterSpacing: 0,
+                        ),
+                      )),
               const Spacer(),
               Column(
                 children: [
