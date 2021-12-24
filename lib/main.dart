@@ -19,9 +19,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserModel?>.value(
-      value: LoginController().user,
-      initialData: null,
+    return MultiProvider(
+      providers: [
+        StreamProvider<UserModel?>.value(
+          value: LoginController().user,
+          initialData: null,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginController(),
+        ),
+        
+      ],
       child: MaterialApp(
           title: 'Trendz', theme: ThemeData(), home: const SplashScreen()),
     );

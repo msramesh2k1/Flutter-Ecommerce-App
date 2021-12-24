@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+
+import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -107,11 +111,30 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               phonelogin
                   ? GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (_) => const OTPScreen()));
+                      onTap: () async {
+                        print(phonecontroller.text.toString());
+                        try {
+                          LoginController()
+                              .verifyPhone(
+                                  "+91", phonecontroller.text.toString())
+                              .then((value) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return const OTPScreen();
+                            }));
+                          }).catchError((e) {
+                            String errorMsg =
+                                'Cant Authenticate you, Try Again Later';
+                            if (e.toString().contains(
+                                'We have blocked all requests from this device due to unusual activity. Try again later.')) {
+                              errorMsg =
+                                  'Please wait as you have used limited number request';
+                            }
+                            print(e);
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
                       },
                       child: const CircleAvatar(
                         radius: 30,

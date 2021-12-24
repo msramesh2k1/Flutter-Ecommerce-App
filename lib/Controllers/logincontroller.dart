@@ -6,6 +6,13 @@ import 'package:trendz/models/user_model.dart';
 
 class LoginController extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _actualCode = '';
+  String get actualCode => _actualCode;
+
+  set actualCode(String value) {
+    _actualCode = value;
+    notifyListeners();
+  }
 
   UserModel? setusermodel(User? user) {
     // UserModel _usermodel = UserModel(uid:user.uid ,email: user.email);
@@ -40,25 +47,82 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-  Future PhoneAuth() async {
+  Future<void> verifyPhone(String countryCode, String mobile) async {
+    var mobileToSend = mobile;
+
     try {
       await _auth.verifyPhoneNumber(
-        phoneNumber: '+44 7123 123 456',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          UserCredential result = await _auth.signInWithCredential(credential);
-          User? user = result.user;
-          setusermodel(user);
-          notifyListeners();
-        },
-        verificationFailed: (FirebaseAuthException e) {},
-        codeSent: (String verificationId, int? resendToken) {},
-        codeAutoRetrievalTimeout: (String verificationId) {},
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      return null;
+          phoneNumber: "+917010862331",
+          codeAutoRetrievalTimeout: (String verId) {
+            actualCode = verId;
+            //Starts the phone number verification process for the given phone number.
+            //Either sends an SMS with a 6 digit code to the phone number specified, or sign's the user in and [verificationCompleted] is called.
+            // this.verificationId = verId;
+          },
+          codeSent: (String verId, [int? forceCodeResend]) async {
+                    },
+          timeout: const Duration(
+            seconds: 120,
+          ),
+          verificationCompleted: (AuthCredential phoneAuthCredential) {
+            print(phoneAuthCredential);
+          },
+          verificationFailed: (FirebaseAuthException exceptio) {
+            print(exceptio);
+            throw exceptio;
+          });
+    } catch (e) {
+      throw e;
     }
   }
+
+  Future<void> verifyOTP(String otp) async {
+   
+    try {
+      final AuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: actualCode,
+        smsCode: otp,
+      );
+      final UserCredential user = await _auth.signInWithCredential(credential);
+      final User? currentUser = await _auth.currentUser;
+      print(user);
+      if (currentUser?.uid != "") {
+        print(currentUser?.uid);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  showError(error) {
+    throw error.toString();
+  }
+
+  // String get verifi => verificationId;
+
+  // set verifi(String value) {
+  //   verificationId = value;
+  //   notifyListeners();
+  // }
+
+  // Future PhoneAuth() async {
+
+  //  signInWithPhoneNumber() async {
+  //   try {
+  //     final AuthCredential credential = PhoneAuthProvider.credential(
+  //       verificationId: verificationId,
+  //       smsCode: smsCode,
+  //     );
+  //     UserCredential result = await _auth.signInWithCredential(credential);
+  //     User? user = result.user;
+  //     setusermodel(user);
+  //     notifyListeners();
+
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   Future signInWithGoogle() async {
     try {
