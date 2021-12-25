@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:trendz/Controllers/logincontroller.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final String email;
+  const RegisterScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -10,6 +13,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController namecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  String gender = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Row(
               children: [
                 Text(
-                  "msramesh2k1@gmail.com",
+                  widget.email,
                   style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
@@ -129,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontWeight: FontWeight.bold,
                         letterSpacing: 2),
                     cursorColor: Colors.black,
-                    controller: namecontroller,
+                    controller: passwordcontroller,
                     decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
@@ -163,77 +168,113 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             Row(
               children: [
-                Container(
-                  child: Center(
-                    child: Text(
-                      "Male",
-                      style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 15,
-                            letterSpacing: 0),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      gender = "male";
+                    });
+                  },
+                  child: Container(
+                    child: Center(
+                      child: Text(
+                        "Male",
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: gender == "male"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 15,
+                              letterSpacing: 0),
+                        ),
                       ),
                     ),
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: gender == "male"
+                            ? Colors.black
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                        )),
                   ),
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      )),
                 ),
                 const SizedBox(
                   width: 20,
                 ),
-                Container(
-                  child: Center(
-                    child: Text(
-                      "Female",
-                      style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 15,
-                            letterSpacing: 0),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      gender = "female";
+                    });
+                  },
+                  child: Container(
+                    child: Center(
+                      child: Text(
+                        "Female",
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: gender == "female"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 15,
+                              letterSpacing: 0),
+                        ),
                       ),
                     ),
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: gender == "female"
+                            ? Colors.black
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                        )),
                   ),
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      )),
                 ),
                 const SizedBox(
                   width: 20,
                 ),
-                Container(
-                  height: 50,
-                  width: 100,
-                  child: Center(
-                    child: Text(
-                      "Other",
-                      style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 15,
-                            letterSpacing: 0),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      gender = "other";
+                    });
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    child: Center(
+                      child: Text(
+                        "Other",
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: gender == "other"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 15,
+                              letterSpacing: 0),
+                        ),
                       ),
                     ),
+                    decoration: BoxDecoration(
+                        color: gender == "other"
+                            ? Colors.black
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                        )),
                   ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      )),
                 ),
                 const SizedBox(
                   width: 20,
@@ -271,17 +312,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 )
               ],
             ),
-            Padding(
-                padding: const EdgeInsets.only(left: 0.0, right: 70.0),
-                child: Container()),
             const Spacer(),
-            const CircleAvatar(
-              radius: 30,
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                context
+                    .read<LoginController>()
+                    .signUp(
+                        email: widget.email,
+                        password: passwordcontroller.text.toString())
+                    .whenComplete(() => Navigator.pop(context));
+              },
+              child: const CircleAvatar(
+                radius: 30,
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.black,
               ),
-              backgroundColor: Colors.black,
             ),
             const SizedBox(
               height: 10,

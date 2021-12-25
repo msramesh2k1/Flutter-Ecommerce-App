@@ -10,10 +10,8 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
-    if (user == null) {
-      return const  LoginScreen();
-    } else {
-      return const  HomeScreen();
+    if (user == null) {        return const LoginScreen();
+    } else {          return const HomeScreen();
     }
   }
 }

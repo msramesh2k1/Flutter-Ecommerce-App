@@ -11,9 +11,11 @@ class LoginController extends ChangeNotifier {
 
   UserModel? setusermodel(User? user) {
     if (user != null) {
+      print(user);
       setData(user);
       return UserModel(uid: user.uid, email: user.email);
     } else {
+      print("something is wrong");
       return null;
     }
     // UserModel _usermodel = UserModel(uid:user.uid ,email: user.email);
@@ -30,27 +32,27 @@ class LoginController extends ChangeNotifier {
     });
   }
 
-
   Future<bool> checkIfEmailInUse(String emailAddress) async {
-  try {
-    // Fetch sign-in methods for the email address
-    final list = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+    try {
+      // Fetch sign-in methods for the email address
+      final list =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
 
-    // In case list is not empty
-    if (list.isNotEmpty) {
-      // Return true because the
-      // user using the email address
+      // In case list is not empty
+      if (list.isNotEmpty) {
+        // Return true because the
+        // user using the email address
+        return true;
+      } else {
+        // Return false because email adress is not in use
+        return false;
+      }
+    } catch (error) {
+      // Handle error
+      // ...
       return true;
-    } else {
-      // Return false because email adress is not in use
-      return false;
     }
-  } catch (error) {
-    // Handle error
-    // ...
-    return true;
   }
-}
 
   Stream<UserModel?> get user {
     return _auth.authStateChanges().map((User? user) => setusermodel(user));
@@ -73,7 +75,11 @@ class LoginController extends ChangeNotifier {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email.toString(), password: password.toString());
       User? user = result.user;
-      return setusermodel(user);
+      print(user);
+
+      setusermodel(user);
+
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       print(e.message);
       return null;

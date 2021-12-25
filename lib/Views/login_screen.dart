@@ -118,10 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Provider.of<LoginController>(context, listen: false)
                               .checkIfEmailInUse(
                                   phonecontroller.text.toString())
-                              .then((value) =>  Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return const RegisterScreen();
-                              })));
+                              .then((value) => Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return RegisterScreen(
+                                      email: phonecontroller.text.toString(),
+                                    );
+                                  })));
                         } else {
                           try {
                             Provider.of<LoginController>(context, listen: false)
