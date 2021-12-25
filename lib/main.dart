@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,14 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => LoginController()),
+        // ChangeNotifierProvider.value(value: LoginController()),
         StreamProvider<UserModel?>.value(
           value: LoginController().user,
           initialData: null,
         ),
-        ChangeNotifierProvider(
-          create: (context) => LoginController(),
-        ),
-        
       ],
       child: MaterialApp(
           title: 'Trendz', theme: ThemeData(), home: const SplashScreen()),

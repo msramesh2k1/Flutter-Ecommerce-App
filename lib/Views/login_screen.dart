@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
 
 import 'otp_screen.dart';
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         print(phonecontroller.text.toString());
                         try {
-                          LoginController()
+                          Provider.of<LoginController>(context,listen: false)
                               .verifyPhone(
                                   "+91", phonecontroller.text.toString())
                               .then((value) {
