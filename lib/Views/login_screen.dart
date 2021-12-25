@@ -21,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool phonelogin = false;
   final TextEditingController phonecontroller = TextEditingController();
 
+  bool isemail = false;
+
   @override
   void initState() {
     super.initState();
@@ -89,10 +91,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           letterSpacing: 2),
                       cursorColor: Colors.black,
                       controller: phonecontroller,
-                      keyboardType: const TextInputType.numberWithOptions(),
+                      keyboardType: isemail
+                          ? TextInputType.emailAddress
+                          : const TextInputType.numberWithOptions(),
                       decoration: InputDecoration(
-                          prefixText: "+91",
-                          hintText: 'Enter Phone Number',
+                          prefixText: isemail ? '' : "+91",
+                          hintText:
+                              isemail ? 'Enter Email ' : 'Enter Phone Number',
                           hintStyle: TextStyle(
                               letterSpacing: 1,
                               fontWeight: FontWeight.bold,
@@ -111,9 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
               phonelogin
                   ? GestureDetector(
                       onTap: () async {
-                        print(phonecontroller.text.toString());
+                        isemail ? print("email") : print("Phonemethod");
                         try {
-                          Provider.of<LoginController>(context,listen: false)
+                          Provider.of<LoginController>(context, listen: false)
                               .verifyPhone(
                                   "+91", phonecontroller.text.toString())
                               .then((value) {
@@ -144,16 +149,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         backgroundColor: Colors.black,
                       ),
                     )
-                  : Text("Use Email",
-                      style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 16,
-                          letterSpacing: 0,
-                        ),
-                      )),
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isemail = !isemail;
+                        });
+                      },
+                      child: Text(isemail ? "Use Phone Number" : "Use Email",
+                          style: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize: 16,
+                              letterSpacing: 0,
+                            ),
+                          )),
+                    ),
               const Spacer(),
               Column(
                 children: [
