@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+import 'package:trendz/models/user_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Provider.of<LoginController>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -26,7 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ))
         ],
         title: Text(
-          "TREND - Z",
+          loginController
+              .setusermodel(FirebaseAuth.instance.currentUser)!
+              .email
+              .toString(),
+          // "TREND - Z",
           style: GoogleFonts.josefinSans(
             textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,

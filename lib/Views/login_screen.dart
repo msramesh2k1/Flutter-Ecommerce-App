@@ -91,9 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           letterSpacing: 2),
                       cursorColor: Colors.black,
                       controller: phonecontroller,
-                      keyboardType: isemail
-                          ? TextInputType.emailAddress
-                          : const TextInputType.numberWithOptions(),
                       decoration: InputDecoration(
                           prefixText: isemail ? '' : "+91",
                           hintText:

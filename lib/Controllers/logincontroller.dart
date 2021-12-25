@@ -8,9 +8,14 @@ class LoginController extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
 
+
+
   UserModel? setusermodel(User? user) {
     // UserModel _usermodel = UserModel(uid:user.uid ,email: user.email);
-    return user != null ? UserModel(uid: user.uid, email: user.email) : null;
+    return user != null ? 
+    UserModel(uid: user.uid, email: user.email)
+     
+    : null;
   }
 
   Stream<UserModel?> get user {
