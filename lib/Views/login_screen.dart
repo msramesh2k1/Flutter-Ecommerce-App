@@ -113,28 +113,34 @@ class _LoginScreenState extends State<LoginScreen> {
               phonelogin
                   ? GestureDetector(
                       onTap: () async {
-                        isemail ? print("email") : print("Phonemethod");
-                        try {
+                        if (isemail == true) {
                           Provider.of<LoginController>(context, listen: false)
-                              .verifyPhone(
-                                  "+91", phonecontroller.text.toString())
-                              .then((value) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return const OTPScreen();
-                            }));
-                          }).catchError((e) {
-                            String errorMsg =
-                                'Cant Authenticate you, Try Again Later';
-                            if (e.toString().contains(
-                                'We have blocked all requests from this device due to unusual activity. Try again later.')) {
-                              errorMsg =
-                                  'Please wait as you have used limited number request';
-                            }
+                              .checkIfEmailInUse(
+                                  phonecontroller.text.toString())
+                              .then((value) => print(value));
+                        } else {
+                          try {
+                            Provider.of<LoginController>(context, listen: false)
+                                .verifyPhone(
+                                    "+91", phonecontroller.text.toString())
+                                .then((value) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return const OTPScreen();
+                              }));
+                            }).catchError((e) {
+                              String errorMsg =
+                                  'Cant Authenticate you, Try Again Later';
+                              if (e.toString().contains(
+                                  'We have blocked all requests from this device due to unusual activity. Try again later.')) {
+                                errorMsg =
+                                    'Please wait as you have used limited number request';
+                              }
+                              print(e);
+                            });
+                          } catch (e) {
                             print(e);
-                          });
-                        } catch (e) {
-                          print(e);
+                          }
                         }
                       },
                       child: const CircleAvatar(

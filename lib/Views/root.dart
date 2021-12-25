@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trendz/Controllers/logincontroller.dart';
 import 'package:trendz/Views/home_screen.dart';
 import 'package:trendz/Views/login_screen.dart';
 import 'package:trendz/models/user_model.dart';
