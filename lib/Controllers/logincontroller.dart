@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -8,14 +9,25 @@ class LoginController extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
 
-
-
   UserModel? setusermodel(User? user) {
+    if (user != null) {
+      setData(user);
+      return UserModel(uid: user.uid, email: user.email);
+    } else {
+      return null;
+    }
     // UserModel _usermodel = UserModel(uid:user.uid ,email: user.email);
-    return user != null ? 
-    UserModel(uid: user.uid, email: user.email)
-     
-    : null;
+    // return user != null ? UserModel(uid: user.uid, email: user.email) : null;
+  }
+
+  void setData(User user) {
+    FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+      "uid": user.uid,
+      "email": user.email,
+      "phonenumber": user.phoneNumber,
+      "profile_picture": user.photoURL,
+      "name": user.displayName,
+    });
   }
 
   Stream<UserModel?> get user {
