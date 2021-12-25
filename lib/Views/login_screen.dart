@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+import 'package:trendz/Views/register_screen.dart';
 
 import 'otp_screen.dart';
 
@@ -117,7 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Provider.of<LoginController>(context, listen: false)
                               .checkIfEmailInUse(
                                   phonecontroller.text.toString())
-                              .then((value) => print(value));
+                              .then((value) =>  Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return const RegisterScreen();
+                              })));
                         } else {
                           try {
                             Provider.of<LoginController>(context, listen: false)
