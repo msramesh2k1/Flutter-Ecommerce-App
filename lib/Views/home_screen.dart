@@ -14,17 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selecteditem = 1;
+  int selecteditem = 0;
+  PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Provider.of<LoginController>(context);
     return Scaffold(
       bottomNavigationBar: Row(children: [
-        navbaritem(Icons.home, Icons.home_outlined, 1),
-        navbaritem(Icons.store, Icons.storefront, 2),
-        navbaritem(Icons.account_circle, Icons.account_circle_outlined, 3),
-        navbaritem(Icons.favorite, Icons.favorite_outline, 4),
-        navbaritem(Icons.shopping_bag, Icons.shopping_bag_outlined, 5)
+        navbaritem(Icons.home, Icons.home_outlined, 0),
+        navbaritem(Icons.store, Icons.storefront, 1),
+        navbaritem(Icons.account_circle, Icons.account_circle_outlined, 2),
+        navbaritem(Icons.favorite, Icons.favorite_outline, 3),
+        navbaritem(Icons.shopping_bag, Icons.shopping_bag_outlined, 4)
       ]),
       appBar: AppBar(
         centerTitle: true,
@@ -55,6 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue[100]!.withOpacity(0.2),
         elevation: 0,
       ),
+      body: Container(
+        child: PageView(
+          controller: pageController,
+          children: [
+            Container(
+              color: Colors.black,
+            ),
+            Container(
+              color: Colors.red,
+            ),
+            Container(
+              color: Colors.green,
+            ),
+            Container(
+              color: Colors.purple,
+            ),
+            Container(
+              color: Colors.grey,
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -62,6 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return InkWell(
       onTap: () {
         setState(() {
+          pageController.animateToPage(index,
+              duration: const Duration(seconds: 1), curve: Curves.decelerate);
           selecteditem = index;
         });
       },
