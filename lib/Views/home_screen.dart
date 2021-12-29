@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+import 'package:trendz/Views/search_screen.dart';
 import 'package:trendz/models/user_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,11 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ))
         ],
         title: Text(
-          loginController
-              .setusermodel(FirebaseAuth.instance.currentUser)!
-              .email
-              .toString(),
-          // "TREND - Z",
+          // loginController
+          //     .setusermodel(FirebaseAuth.instance.currentUser)!
+          //     .email
+          //     .toString(),
+          "TREND - Z",
           style: GoogleFonts.josefinSans(
             textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -56,27 +57,70 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue[100]!.withOpacity(0.2),
         elevation: 0,
       ),
-      body: Container(
-        child: PageView(
-          controller: pageController,
-          children: [
-            Container(
-              color: Colors.black,
+      body: PageView(
+        controller: pageController,
+        children: [
+          homescreen(),
+          Container(
+            color: Colors.red,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.purple,
+          ),
+          Container(
+            color: Colors.grey,
+          )
+        ],
+      ),
+    );
+  }
+
+  Container homescreen() {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 80,
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const SearchScreen()));
+                },
+                child: Container(
+                  height: 50,
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20),
+                        child: Icon(Icons.search),
+                      ),
+                      Text(
+                        "Search by products , brands & more",
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 12,
+                              letterSpacing: 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                  width: MediaQuery.of(context).size.width - 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: BorderRadius.circular(7)),
+                ),
+              ),
             ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.purple,
-            ),
-            Container(
-              color: Colors.grey,
-            )
-          ],
-        ),
+            color: Colors.blue[100]!.withOpacity(0.2),
+          )
+        ],
       ),
     );
   }
