@@ -21,6 +21,78 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     LoginController loginController = Provider.of<LoginController>(context);
     return Scaffold(
+      drawer: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    "TREND - Z",
+                    style: GoogleFonts.josefinSans(
+                      textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18,
+                          letterSpacing: 2),
+                    ),
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.clear),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+                child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 30),
+                      Text(
+                        "Shop By",
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 15,
+                              letterSpacing: 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Container(),
+                      width: MediaQuery.of(context).size.width - 50,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  )
+                ],
+              ),
+              color: Colors.blue[100]!.withOpacity(0.2),
+            ))
+          ],
+        ),
+      ),
       bottomNavigationBar: Row(children: [
         navbaritem(Icons.home, Icons.home_outlined, 0),
         navbaritem(Icons.store, Icons.storefront, 1),
@@ -29,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
         navbaritem(Icons.shopping_bag, Icons.shopping_bag_outlined, 4)
       ]),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         actions: [
           IconButton(
