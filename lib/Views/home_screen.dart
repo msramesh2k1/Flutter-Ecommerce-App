@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      child: Container(),
+                      child: Container(
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection("category")
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator(
+                                color: Colors.white,
+                              );
+                            } else {
+                              return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListView.builder(
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Container(
+                                            height: 60,
+                                            child: Text(snapshot
+                                                .data!.docs[index]['name']),
+                                            color: Colors.amber,
+                                          ),
+                                        );
+                                      }));
+                            }
+                          },
+                        ),
+                      ),
                       width: MediaQuery.of(context).size.width - 50,
                       decoration: BoxDecoration(
                           color: Colors.white,

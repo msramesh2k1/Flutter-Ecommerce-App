@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendz/Controllers/logincontroller.dart';
+import 'package:trendz/Services/database.dart';
 import 'package:trendz/models/user_model.dart';
 
 import 'Views/splash_screen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginController()),
+        ChangeNotifierProvider(create: (context) => DataBase()),
         // ChangeNotifierProvider.value(value: LoginController()),
         StreamProvider<UserModel?>.value(
           value: LoginController().user,
